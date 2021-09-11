@@ -1,0 +1,13 @@
+<div class="main-container">
+  <h2>FlexGrid</h2>
+  <wj-flex-grid [itemsSource]="gridData"
+                [showMarquee]="true"
+                [itemFormatter]="itemFormatter"
+                headersVisibility="Column">
+    <wj-flex-grid-filter></wj-flex-grid-filter>
+    <wj-flex-grid-column header="ID" binding="id" [width]="60"></wj-flex-grid-column>
+    <wj-flex-grid-column header="商品名" binding="product" [width]="200"></wj-flex-grid-column>
+    <wj-flex-grid-column header="受注日" binding="date" [width]="120"></wj-flex-grid-column>
+    <wj-flex-grid-column header="金額" binding="amount" [width]="100" format="c"></wj-flex-grid-column>
+  </wj-flex-grid>
+</div>
