@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { CellType, GridPanel } from '@grapecity/wijmo.grid';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { CellType, GridPanel, CellRangeEventArgs } from '@grapecity/wijmo.grid';
+import { MainComponentStore } from './main.component.store';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls: ['./main.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
+  constructor(private store: MainComponentStore) { }
+  gridData$ = this.store.gridData$;
 
-  constructor() { }
+  cellValueChanged(e: CellRangeEventArgs) {
+    // 複数行にわたってセルが同時に変更されることもあるので、
+    // 変更された行の範囲を取得する。
+    const { row, row2 } = e.range;
+    
+    // 変更後の行のデータを取得する。
+    const dirtyRows = e.panel.rows
+      .filter(x => row <= x.index && x.index <= row2)
+      .map(y => y.dataItem);
 
-  ngOnInit(): void {
+    console.log(dirtyRows);
   }
-  gridData = [
-    { id: 15, product: 'ピュアデミグラスソース', date: '2017/01/10', amount: 6000 },
-    { id: 17, product: 'だしこんぶ', date: '2017/01/08', amount: 14500 },
-    { id: 18, product: 'ピリカラタバスコ', date: '2017/01/12', amount: 4000 },
-    { id: 84, product: 'なまわさび', date: '2017/01/21', amount: 8000 }
-  ];
 
+  // 見出しを中央揃えにする。
   itemFormatter = (panel: GridPanel, r: number, c: number, cell: HTMLElement) => {
     if (panel.cellType === CellType.ColumnHeader) {
       cell.style.textAlign = 'center';

@@ -13,3 +13,19 @@
   height: 42px;
   overflow: hidden;
 }
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header-container {
+  flex: 0 0 auto;
+}
+
+.router-outlet-container {
+  height: 100%;
+  flex: 0 3 auto;
+  overflow: auto;
+}
